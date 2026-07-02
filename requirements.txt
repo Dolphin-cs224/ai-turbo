@@ -1,6 +1,7 @@
 streamlit
 pandas
 pykrx
-openai
 plotly
 python-dotenv
+openai
+setuptools<81
