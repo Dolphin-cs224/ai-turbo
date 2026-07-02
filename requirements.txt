@@ -1,5 +1,4 @@
 streamlit
 pandas
 pykrx
-plotly
-python-dotenv
+openai
