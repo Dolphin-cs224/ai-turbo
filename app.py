@@ -280,7 +280,7 @@ if df.empty:
 # -----------------------------
 # 점수화
 # -----------------------------
-df["score"] = (
+df["momentum_score"] = (
     df["ret_240d"].rank(pct=True) * 10
     + df["ret_120d"].rank(pct=True) * 15
     + df["ret_60d"].rank(pct=True) * 25
@@ -290,7 +290,8 @@ df["score"] = (
     - df["volatility"].rank(pct=True) * 10
 )
 
-df["score"] = df["score"].round(1)
+df["momentum_score"] = df["momentum_score"].round(1)
+df["total_score"] = df["momentum_score"]
 
 # -----------------------------
 # 핵심 지표
@@ -301,23 +302,23 @@ with col1:
     st.metric("분석 성공 종목 수", len(df))
 
 with col2:
-    top_theme = df.groupby("theme")["score"].mean().sort_values(ascending=False).index[0]
+    top_theme = df.groupby("theme")["total_score"].mean().sort_values(ascending=False).index[0]
     st.metric("가장 강한 테마", top_theme)
 
 with col3:
-    top_stock = df.sort_values("score", ascending=False).iloc[0]["name"]
+    top_stock = df.sort_values("total_score", ascending=False).iloc[0]["name"]
     st.metric("최상위 후보", top_stock)
 
 with col4:
-    avg_score = round(df["score"].mean(), 1)
-    st.metric("평균 점수", avg_score)
+    avg_total_score = round(df["total_score"].mean(), 1)
+    st.metric("평균 점수", avg_total_score)
 
 # -----------------------------
 # 매수 후보 TOP 10
 # -----------------------------
 st.subheader("매수 후보 TOP 10")
 
-top10 = df.sort_values("score", ascending=False).head(10)
+top10 = df.sort_values("total_score", ascending=False).head(10)
 
 display_cols = [
     "code",
@@ -332,7 +333,8 @@ display_cols = [
     "volume_ratio",
     "trend",
     "volatility",
-    "score"
+    "momentum_score",
+    "total_score"
 ]
 
 st.dataframe(top10[display_cols], width="stretch")
@@ -342,17 +344,17 @@ st.dataframe(top10[display_cols], width="stretch")
 # -----------------------------
 st.subheader("테마별 평균 점수")
 
-theme_score = (
-    df.groupby("theme")["score"]
+theme_total_score = (
+    df.groupby("theme")["total_score"]
     .mean()
     .sort_values(ascending=False)
     .round(1)
 )
 
-st.bar_chart(theme_score)
+st.bar_chart(theme_total_score)
 
 st.dataframe(
-    theme_score.reset_index().rename(columns={"score": "theme_avg_score"}),
+    theme_total_score.reset_index().rename(columns={"total_score": "theme_avg_total_score"}),
     width="stretch"
 )
 
@@ -381,7 +383,8 @@ if not risk_df.empty:
                 "ret_60d",
                 "ret_120d",
                 "volatility",
-                "score"
+                "momentum_score",
+                "total_score"
             ]
         ],
         width="stretch"
@@ -394,7 +397,7 @@ else:
 # -----------------------------
 with st.expander("전체 분석 결과 보기"):
     st.dataframe(
-        df.sort_values("score", ascending=False),
+        df.sort_values("total_score", ascending=False),
         width="stretch"
     )
 
