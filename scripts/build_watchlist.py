@@ -113,10 +113,14 @@ def get_naver_market_sum(sosok: int, market_name: str, max_pages: int = 60):
             break
 
         table_df = market_tables[0]
-        table_df = table_df[["종목명", "시가총액"]].dropna()
+        table_df = table_df[["종목명", "시가총액", "외국인비율", "PER", "ROE"]].dropna(subset=["종목명", "시가총액"])
+
         table_df = table_df.rename(columns={
             "종목명": "name",
-            "시가총액": "market_cap"
+            "시가총액": "market_cap",
+            "외국인비율": "foreign_ratio",
+            "PER": "per",
+            "ROE": "roe"
         })
 
         # 3. 종목명 기준으로 코드와 시가총액 합치기
@@ -442,6 +446,9 @@ def build_watchlist():
             "market",
             "rank",
             "market_cap",
+            "foreign_ratio",
+            "per",
+            "roe",
             "max_weight",
             "active",
             "universe_rule",

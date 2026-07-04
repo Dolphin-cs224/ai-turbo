@@ -91,7 +91,7 @@ def load_price_data(code: str, start_date: str, end_date: str):
     return stock.get_market_ohlcv_by_date(start_date, end_date, code)
 
 
-def analyze_stock(code, name, theme):
+def analyze_stock(code, name, theme, foreign_ratio, per, roe):
     """
     종목별 주가 데이터 분석 함수
     """
@@ -191,6 +191,9 @@ def analyze_stock(code, name, theme):
             "ret_60d": round(ret_60d, 2),
             "ret_120d": round(ret_120d, 2),
             "ret_240d": round(ret_240d, 2),
+            "foreign_ratio": foreign_ratio,
+            "per": per,
+            "roe": roe,
             "volume_ratio": round(volume_ratio, 2),
             "trend": round(trend, 2),
             "volatility": round(volatility, 2),
@@ -219,7 +222,10 @@ with st.spinner("주가 데이터를 불러오고 분석하는 중입니다...")
         result, error = analyze_stock(
             row["code"],
             row["name"],
-            row["theme"]
+            row["theme"],
+            row["foreign_ratio"],
+            row["per"],
+            row["roe"]
         )
 
         if result is not None:
@@ -264,14 +270,46 @@ numeric_cols = [
     "ret_60d",
     "ret_120d",
     "ret_240d",
+    "foreign_ratio",
+    "per",
+    "roe",
     "volume_ratio",
     "trend",
     "volatility"
 ]
+
 for col in numeric_cols:
     df[col] = pd.to_numeric(df[col], errors="coerce")
 
-df = df.dropna(subset=numeric_cols)
+required_price_cols = [
+    "ret_5d",
+    "ret_20d",
+    "ret_60d",
+    "ret_120d",
+    "ret_240d",
+    "volume_ratio",
+    "trend",
+    "volatility"
+]
+
+df = df.dropna(subset=required_price_cols)
+
+df["foreign_ratio"] = df["foreign_ratio"].fillna(df["foreign_ratio"].median())
+df["per"] = df["per"].fillna(df["per"].median())
+df["roe"] = df["roe"].fillna(df["roe"].median())
+
+valid_per = df["per"].where(df["per"] > 0)
+valid_per = valid_per.fillna(valid_per.median())
+
+per_score = (1 - valid_per.rank(pct=True)) * 100
+roe_score = df["roe"].rank(pct=True) * 100
+foreign_score = df["foreign_ratio"].rank(pct=True) * 100
+
+df["fundamental_score"] = (
+    roe_score * 0.5
+    + per_score * 0.3
+    + foreign_score * 0.2
+).round(1)
 
 if df.empty:
     st.error("계산 가능한 숫자 데이터가 없습니다.")
@@ -354,6 +392,7 @@ display_cols = [
     "volatility",
     "momentum_score",
     "theme_score",
+    "fundamental_score",
     "risk_score",
     "total_score"
 ]
@@ -406,6 +445,7 @@ if not risk_df.empty:
                 "volatility",
                 "momentum_score",
                 "theme_score",
+                "fundamental_score",
                 "risk_score",
                 "total_score"
             ]
