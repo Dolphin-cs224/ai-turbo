@@ -430,7 +430,6 @@ def build_watchlist():
 
     universe["code"] = universe["code"].astype(str).str.zfill(6)
     universe["theme"] = universe["name"].apply(classify_theme)
-    universe["sub_theme"] = "미분류"
     universe["max_weight"] = 0.10
     universe["active"] = "Y"
     universe["memo"] = ""
@@ -440,7 +439,6 @@ def build_watchlist():
             "code",
             "name",
             "theme",
-            "sub_theme",
             "market",
             "rank",
             "market_cap",

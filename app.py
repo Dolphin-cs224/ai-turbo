@@ -22,9 +22,9 @@ st.sidebar.header("분석 설정")
 
 analysis_days = st.sidebar.slider(
     "분석 기간",
-    min_value=60,
-    max_value=240,
-    value=120,
+    min_value=120,
+    max_value=450,
+    value=400,
     step=30
 )
 
@@ -146,8 +146,27 @@ def analyze_stock(code, name, theme):
 
         current_price = int(close.iloc[-1])
 
-        ret_5d = close.pct_change(5).iloc[-1] * 100
-        ret_20d = close.pct_change(20).iloc[-1] * 100
+        def calc_return(price_series, days):
+            """
+            지정한 거래일 기준 수익률 계산
+            데이터가 부족하면 0으로 처리
+            """
+            if len(price_series) <= days:
+                return 0
+
+            past_price = price_series.iloc[-days - 1]
+            current_price_for_return = price_series.iloc[-1]
+
+            if past_price == 0:
+                return 0
+
+            return ((current_price_for_return / past_price) - 1) * 100
+
+        ret_5d = calc_return(close, 5)
+        ret_20d = calc_return(close, 20)
+        ret_60d = calc_return(close, 60)
+        ret_120d = calc_return(close, 120)
+        ret_240d = calc_return(close, 240)
 
         volume_5d = volume.tail(5).mean()
         volume_20d = volume.tail(20).mean()
@@ -169,6 +188,9 @@ def analyze_stock(code, name, theme):
             "price": current_price,
             "ret_5d": round(ret_5d, 2),
             "ret_20d": round(ret_20d, 2),
+            "ret_60d": round(ret_60d, 2),
+            "ret_120d": round(ret_120d, 2),
+            "ret_240d": round(ret_240d, 2),
             "volume_ratio": round(volume_ratio, 2),
             "trend": round(trend, 2),
             "volatility": round(volatility, 2),
@@ -236,7 +258,16 @@ if not results:
 df = pd.DataFrame(results)
 
 # 숫자형 변환
-numeric_cols = ["ret_5d", "ret_20d", "volume_ratio", "trend", "volatility"]
+numeric_cols = [
+    "ret_5d",
+    "ret_20d",
+    "ret_60d",
+    "ret_120d",
+    "ret_240d",
+    "volume_ratio",
+    "trend",
+    "volatility"
+]
 for col in numeric_cols:
     df[col] = pd.to_numeric(df[col], errors="coerce")
 
@@ -250,11 +281,13 @@ if df.empty:
 # 점수화
 # -----------------------------
 df["score"] = (
-    df["ret_5d"].rank(pct=True) * 30
-    + df["ret_20d"].rank(pct=True) * 20
-    + df["volume_ratio"].rank(pct=True) * 30
-    + df["trend"].rank(pct=True) * 20
-    - df["volatility"].rank(pct=True) * 15
+    df["ret_240d"].rank(pct=True) * 10
+    + df["ret_120d"].rank(pct=True) * 15
+    + df["ret_60d"].rank(pct=True) * 25
+    + df["ret_20d"].rank(pct=True) * 25
+    + df["ret_5d"].rank(pct=True) * 10
+    + df["volume_ratio"].rank(pct=True) * 15
+    - df["volatility"].rank(pct=True) * 10
 )
 
 df["score"] = df["score"].round(1)
@@ -293,6 +326,9 @@ display_cols = [
     "price",
     "ret_5d",
     "ret_20d",
+    "ret_60d",
+    "ret_120d",
+    "ret_240d",
     "volume_ratio",
     "trend",
     "volatility",
@@ -342,6 +378,8 @@ if not risk_df.empty:
                 "theme",
                 "ret_5d",
                 "ret_20d",
+                "ret_60d",
+                "ret_120d",
                 "volatility",
                 "score"
             ]
