@@ -18,6 +18,51 @@ HEADERS = {
     "User-Agent": "Mozilla/5.0"
 }
 
+# -----------------------------
+# 제외 종목 필터
+# ETF, ETN, 스팩, 우선주, 리츠 등 자동 제외
+# -----------------------------
+EXCLUDE_KEYWORDS = [
+    # ETF / ETN 운용사 브랜드
+    "KODEX", "TIGER", "ACE", "RISE", "KBSTAR", "SOL",
+    "HANARO", "ARIRANG", "KOSEF", "TIMEFOLIO", "KoAct",
+    "히어로즈", "마이티", "TREX", "FOCUS", "PLUS",
+
+    # ETF/ETN 상품명에 자주 들어가는 단어
+    "ETF", "ETN", "액티브", "레버리지", "인버스",
+    "선물", "채권", "국채", "회사채", "TDF", "TR",
+
+    # 스팩 / 리츠
+    "스팩", "SPAC", "기업인수목적", "리츠", "REIT",
+]
+
+
+def is_excluded_stock(name: str) -> bool:
+    """
+    투자 유니버스에서 제외할 종목인지 판단한다.
+    ETF, ETN, 스팩, 우선주, 리츠 등을 제외한다.
+    """
+    if not isinstance(name, str):
+        return True
+
+    clean_name = name.strip()
+
+    # 키워드 기반 제외
+    for keyword in EXCLUDE_KEYWORDS:
+        if keyword in clean_name:
+            return True
+
+    # 우선주 제외
+    # 예: 삼성전자우, 현대차우, LG화학우, 하이트진로2우B
+    if re.search(r"(우|우B|우선주)$", clean_name):
+        return True
+
+    # 스팩 이름 패턴 추가 제외
+    # 예: 하나스팩34호, 미래에셋비전스팩7호
+    if re.search(r"스팩\d*호", clean_name):
+        return True
+
+    return False
 
 def get_naver_market_sum(sosok: int, market_name: str, max_pages: int = 60):
     """
@@ -167,6 +212,11 @@ def build_watchlist():
     print("네이버 금융에서 KOSDAQ 시가총액 데이터를 가져오는 중...")
     kosdaq = get_naver_market_sum(sosok=1, market_name="KOSDAQ")
 
+
+    # ETF, ETN, 스팩, 우선주, 리츠 등 제외
+    kospi = kospi[~kospi["name"].apply(is_excluded_stock)].copy()
+    kosdaq = kosdaq[~kosdaq["name"].apply(is_excluded_stock)].copy()
+    
     # 우선주 제외
     kospi = remove_preferred_stocks(kospi)
     kosdaq = remove_preferred_stocks(kosdaq)
