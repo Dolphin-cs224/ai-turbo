@@ -298,9 +298,18 @@ df["theme_score"] = (
     .round(1)
 )
 
+df["risk_score"] = (
+    100
+    - df["volatility"].rank(pct=True) * 40
+    - df["ret_5d"].rank(pct=True) * 20
+    - df["ret_20d"].rank(pct=True) * 20
+    - df["volume_ratio"].rank(pct=True) * 20
+).clip(0, 100).round(1)
+
 df["total_score"] = (
-    df["momentum_score"] * 0.8
+    df["momentum_score"] * 0.7
     + df["theme_score"] * 0.2
+    + df["risk_score"] * 0.1
 ).round(1)
 
 # -----------------------------
@@ -345,6 +354,7 @@ display_cols = [
     "volatility",
     "momentum_score",
     "theme_score",
+    "risk_score",
     "total_score"
 ]
 
@@ -396,6 +406,7 @@ if not risk_df.empty:
                 "volatility",
                 "momentum_score",
                 "theme_score",
+                "risk_score",
                 "total_score"
             ]
         ],
