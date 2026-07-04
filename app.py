@@ -291,7 +291,17 @@ df["momentum_score"] = (
 )
 
 df["momentum_score"] = df["momentum_score"].round(1)
-df["total_score"] = df["momentum_score"]
+
+df["theme_score"] = (
+    df.groupby("theme")["momentum_score"]
+    .transform("mean")
+    .round(1)
+)
+
+df["total_score"] = (
+    df["momentum_score"] * 0.8
+    + df["theme_score"] * 0.2
+).round(1)
 
 # -----------------------------
 # 핵심 지표
@@ -334,6 +344,7 @@ display_cols = [
     "trend",
     "volatility",
     "momentum_score",
+    "theme_score",
     "total_score"
 ]
 
@@ -384,6 +395,7 @@ if not risk_df.empty:
                 "ret_120d",
                 "volatility",
                 "momentum_score",
+                "theme_score",
                 "total_score"
             ]
         ],
