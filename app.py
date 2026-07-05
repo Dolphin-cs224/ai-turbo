@@ -345,8 +345,9 @@ df["risk_score"] = (
 ).clip(0, 100).round(1)
 
 df["total_score"] = (
-    df["momentum_score"] * 0.7
-    + df["theme_score"] * 0.2
+    df["momentum_score"] * 0.55
+    + df["theme_score"] * 0.15
+    + df["fundamental_score"] * 0.20
     + df["risk_score"] * 0.1
 ).round(1)
 
