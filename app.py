@@ -1,8 +1,19 @@
 import streamlit as st
 import pandas as pd
+import os
+from dotenv import load_dotenv
 from pykrx import stock
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
+
+load_dotenv()
+
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+
+if OPENAI_API_KEY and OPENAI_API_KEY != "your_api_key_here":
+    ai_status = "AI API 연결 준비 완료"
+else:
+    ai_status = "AI API 키 미설정"
 
 # -----------------------------
 # 기본 설정
@@ -27,6 +38,9 @@ analysis_days = st.sidebar.slider(
     value=400,
     step=30
 )
+
+st.sidebar.markdown("### AI 설정 상태")
+st.sidebar.write(ai_status)
 
 show_debug = st.sidebar.checkbox(
     "디버그 정보 보기",
