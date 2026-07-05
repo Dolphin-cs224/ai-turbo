@@ -512,14 +512,35 @@ selected_news_theme = st.selectbox(
     sorted(df["theme"].unique())
 )
 
+selected_news_regions = st.multiselect(
+    "뉴스 권역을 선택하세요",
+    ["국내", "미국", "일본", "중동"],
+    default=["국내", "미국", "일본", "중동"]
+)
+
+max_news_per_keyword = st.slider(
+    "키워드당 뉴스 수",
+    min_value=1,
+    max_value=5,
+    value=2
+)
+
 if st.button("테마 뉴스 수집"):
     news_items = collect_theme_news(
         selected_news_theme,
-        max_items_per_keyword=2
+        max_items_per_keyword=max_news_per_keyword,
+        regions=selected_news_regions
     )
 
     if news_items:
         news_df = pd.DataFrame(news_items)
+
+        st.write("권역별 뉴스 수")
+        st.dataframe(
+            news_df.groupby("region").size().reset_index(name="news_count"),
+            width="stretch"
+        )
+
         st.dataframe(news_df, width="stretch")
     else:
         st.info("수집된 뉴스가 없습니다.")
