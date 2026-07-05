@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from pykrx import stock
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
+from modules.news_collector import collect_theme_news
 
 load_dotenv()
 
@@ -499,6 +500,30 @@ if not risk_df.empty:
     )
 else:
     st.success("현재 기준으로 단기 급등 + 고변동성 위험 종목은 많지 않습니다.")
+
+
+# -----------------------------
+# 테마 뉴스 수집 테스트
+# -----------------------------
+st.subheader("테마 뉴스 수집 테스트")
+
+selected_news_theme = st.selectbox(
+    "뉴스를 수집할 테마를 선택하세요",
+    sorted(df["theme"].unique())
+)
+
+if st.button("테마 뉴스 수집"):
+    news_items = collect_theme_news(
+        selected_news_theme,
+        max_items_per_keyword=2
+    )
+
+    if news_items:
+        news_df = pd.DataFrame(news_items)
+        st.dataframe(news_df, width="stretch")
+    else:
+        st.info("수집된 뉴스가 없습니다.")
+
 
 # -----------------------------
 # 전체 분석 결과
