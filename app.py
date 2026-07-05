@@ -344,6 +344,34 @@ df["risk_score"] = (
     - df["volume_ratio"].rank(pct=True) * 20
 ).clip(0, 100).round(1)
 
+vol_threshold = df["volatility"].quantile(0.8)
+volume_threshold = df["volume_ratio"].quantile(0.8)
+
+def classify_risk_type(row):
+    risk_types = []
+
+    if row["ret_5d"] > 10:
+        risk_types.append("단기 급등")
+
+    if row["ret_20d"] > 20:
+        risk_types.append("20일 과열")
+
+    if row["volatility"] >= vol_threshold:
+        risk_types.append("고변동성")
+
+    if row["volume_ratio"] >= volume_threshold:
+        risk_types.append("거래량 과열")
+
+    if row["trend"] < 0:
+        risk_types.append("추세 약화")
+
+    if not risk_types:
+        return "특이 리스크 없음"
+
+    return ", ".join(risk_types)
+
+df["risk_type"] = df.apply(classify_risk_type, axis=1)
+
 df["total_score"] = (
     df["momentum_score"] * 0.55
     + df["theme_score"] * 0.15
@@ -395,6 +423,7 @@ display_cols = [
     "theme_score",
     "fundamental_score",
     "risk_score",
+    "risk_type",
     "total_score"
 ]
 
@@ -448,6 +477,7 @@ if not risk_df.empty:
                 "theme_score",
                 "fundamental_score",
                 "risk_score",
+                "risk_type",
                 "total_score"
             ]
         ],
