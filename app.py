@@ -6,6 +6,7 @@ from pykrx import stock
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 from modules.news_collector import collect_theme_news
+from modules.news_analyzer import analyze_theme_news
 
 load_dotenv()
 
@@ -525,6 +526,15 @@ max_news_per_keyword = st.slider(
     value=2
 )
 
+if "theme_news_items" not in st.session_state:
+    st.session_state["theme_news_items"] = []
+
+if "theme_news_df" not in st.session_state:
+    st.session_state["theme_news_df"] = None
+
+if "theme_news_analysis" not in st.session_state:
+    st.session_state["theme_news_analysis"] = None
+
 if st.button("테마 뉴스 수집"):
     news_items = collect_theme_news(
         selected_news_theme,
@@ -532,18 +542,68 @@ if st.button("테마 뉴스 수집"):
         regions=selected_news_regions
     )
 
-    if news_items:
-        news_df = pd.DataFrame(news_items)
+    st.session_state["theme_news_items"] = news_items
+    st.session_state["theme_news_analysis"] = None
 
-        st.write("권역별 뉴스 수")
-        st.dataframe(
-            news_df.groupby("region").size().reset_index(name="news_count"),
-            width="stretch"
+    if news_items:
+        st.session_state["theme_news_df"] = pd.DataFrame(news_items)
+    else:
+        st.session_state["theme_news_df"] = None
+
+news_df = st.session_state.get("theme_news_df")
+
+if news_df is not None and not news_df.empty:
+    st.write("권역별 뉴스 수")
+    st.dataframe(
+        news_df.groupby("region").size().reset_index(name="news_count"),
+        width="stretch"
+    )
+
+    st.dataframe(news_df, width="stretch")
+
+    if st.button("AI 뉴스 분석 실행"):
+        analysis_result = analyze_theme_news(
+            selected_news_theme,
+            news_df
         )
 
-        st.dataframe(news_df, width="stretch")
-    else:
-        st.info("수집된 뉴스가 없습니다.")
+        st.session_state["theme_news_analysis"] = analysis_result
+
+    analysis_result = st.session_state.get("theme_news_analysis")
+
+    if analysis_result:
+        st.write("AI 뉴스 분석 결과")
+
+        if analysis_result.get("ai_enabled"):
+            st.success("AI 뉴스 분석 완료")
+        else:
+            st.warning("AI 뉴스 분석이 기본값으로 처리되었습니다.")
+
+        st.metric(
+            "테마 뉴스 점수",
+            analysis_result.get("theme_news_score", 50)
+        )
+
+        st.write("뉴스 분위기")
+        st.write(analysis_result.get("news_sentiment", "중립"))
+
+        st.write("요약")
+        st.write(analysis_result.get("summary", ""))
+
+        st.write("긍정 요인")
+        st.write(analysis_result.get("positive_points", []))
+
+        st.write("부정 요인")
+        st.write(analysis_result.get("negative_points", []))
+
+        st.write("주요 권역")
+        st.write(analysis_result.get("key_regions", []))
+
+        if analysis_result.get("error"):
+            st.error(analysis_result.get("error"))
+
+else:
+    st.info("수집된 뉴스가 없습니다. 먼저 테마 뉴스를 수집하세요.")
 
 
 # -----------------------------
