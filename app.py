@@ -389,11 +389,28 @@ def classify_risk_type(row):
 
 df["risk_type"] = df.apply(classify_risk_type, axis=1)
 
+
+# -----------------------------
+# AI 뉴스 점수 반영
+# -----------------------------
+if "theme_news_scores" not in st.session_state:
+    st.session_state["theme_news_scores"] = {}
+
+theme_news_scores = st.session_state.get("theme_news_scores", {})
+
+df["theme_news_score"] = (
+    df["theme"]
+    .map(theme_news_scores)
+    .fillna(50.0)
+    .astype(float)
+)
+
 df["total_score"] = (
-    df["momentum_score"] * 0.55
+    df["momentum_score"] * 0.45
     + df["theme_score"] * 0.15
     + df["fundamental_score"] * 0.20
     + df["risk_score"] * 0.1
+    + df["theme_news_score"] * 0.10
 ).round(1)
 
 # -----------------------------
@@ -440,6 +457,7 @@ display_cols = [
     "theme_score",
     "fundamental_score",
     "risk_score",
+    "theme_news_score",
     "risk_type",
     "total_score"
 ]
@@ -579,6 +597,16 @@ if news_df is not None and not news_df.empty:
 
             st.session_state["theme_news_df"] = enriched_news_df
             st.session_state["theme_news_analysis"] = analysis_result
+            
+            if "theme_news_scores" not in st.session_state:
+                st.session_state["theme_news_scores"] = {}
+
+            st.session_state["theme_news_scores"][selected_news_theme] = analysis_result.get(
+                "theme_news_score",
+                50
+            )
+
+            st.rerun()
 
     analysis_result = st.session_state.get("theme_news_analysis")
 
