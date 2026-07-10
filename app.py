@@ -7,6 +7,7 @@ from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 from modules.news_collector import collect_theme_news
 from modules.news_analyzer import analyze_theme_news
+from modules.news_reader import enrich_news_with_article_text
 
 load_dotenv()
 
@@ -562,12 +563,22 @@ if news_df is not None and not news_df.empty:
     st.dataframe(news_df, width="stretch")
 
     if st.button("AI 뉴스 분석 실행"):
-        analysis_result = analyze_theme_news(
-            selected_news_theme,
-            news_df
-        )
+        with st.spinner("기사 본문을 읽고 AI가 뉴스 분위기를 분석하는 중입니다..."):
+            enriched_news = enrich_news_with_article_text(
+                news_df,
+                max_articles=10,
+                max_chars_per_article=2500
+            )
 
-        st.session_state["theme_news_analysis"] = analysis_result
+            enriched_news_df = pd.DataFrame(enriched_news)
+
+            analysis_result = analyze_theme_news(
+                selected_news_theme,
+                enriched_news_df
+            )
+
+            st.session_state["theme_news_df"] = enriched_news_df
+            st.session_state["theme_news_analysis"] = analysis_result
 
     analysis_result = st.session_state.get("theme_news_analysis")
 
@@ -582,6 +593,23 @@ if news_df is not None and not news_df.empty:
         st.metric(
             "테마 뉴스 점수",
             analysis_result.get("theme_news_score", 50)
+        )
+
+        col1, col2, col3 = st.columns(3)
+
+        col1.metric(
+            "본문 기반 기사",
+            analysis_result.get("article_based_count", 0)
+        )
+
+        col2.metric(
+            "제목 기반 기사",
+            analysis_result.get("title_only_count", 0)
+        )
+
+        col3.metric(
+            "분석 기준",
+            analysis_result.get("analysis_basis", "분석 기준 없음")
         )
 
         st.write("뉴스 분위기")

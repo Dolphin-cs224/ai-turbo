@@ -22,6 +22,9 @@ DEFAULT_ANALYSIS_RESULT = {
     "positive_points": [],
     "negative_points": [],
     "key_regions": [],
+    "article_based_count": 0,
+    "title_only_count": 0,
+    "analysis_basis": "분석 불가",
     "ai_enabled": False,
     "error": None,
 }
@@ -31,6 +34,9 @@ def _normalize_news_items(news_data: Any, max_items: int = 30) -> list[dict]:
     """
     Streamlit에서 전달되는 뉴스 데이터를 AI 분석용 리스트로 정리한다.
     pandas DataFrame, list[dict] 둘 다 처리할 수 있게 만든다.
+
+    article_text가 있으면 본문 기반 분석 자료로 사용하고,
+    article_text가 없으면 제목 기반 보조 자료로 사용한다.
     """
 
     if news_data is None:
@@ -59,6 +65,9 @@ def _normalize_news_items(news_data: Any, max_items: int = 30) -> list[dict]:
         if not title:
             continue
 
+        article_text = str(row.get("article_text", "") or "").strip()
+        article_readable = bool(row.get("article_readable", False)) and bool(article_text)
+
         normalized.append(
             {
                 "title": str(title),
@@ -67,9 +76,16 @@ def _normalize_news_items(news_data: Any, max_items: int = 30) -> list[dict]:
                 "published": str(
                     row.get("published")
                     or row.get("published_at")
+                    or row.get("pub_date")
                     or row.get("date")
                     or ""
                 ),
+                "link": str(row.get("link", "")),
+                "article_url": str(row.get("article_url", row.get("link", ""))),
+                "article_domain": str(row.get("article_domain", "")),
+                "article_readable": article_readable,
+                "article_text": article_text[:4000],
+                "article_error": str(row.get("article_error", "") or ""),
             }
         )
 
@@ -103,6 +119,50 @@ def _safe_json_loads(text: str) -> dict:
     return {}
 
 
+def _build_news_text(news_items: list[dict]) -> tuple[str, int, int]:
+    """
+    AI에게 전달할 뉴스 텍스트를 만든다.
+    본문이 있는 기사는 본문까지 포함하고,
+    본문이 없는 기사는 제목만 보조 근거로 표시한다.
+    """
+
+    blocks = []
+    article_based_count = 0
+    title_only_count = 0
+
+    for idx, item in enumerate(news_items, start=1):
+        if item["article_readable"]:
+            article_based_count += 1
+            body = item["article_text"][:4000]
+
+            blocks.append(
+                f"""
+[뉴스 {idx} / 본문 기반]
+권역: {item['region']}
+출처: {item['source']}
+발행일: {item['published']}
+제목: {item['title']}
+본문:
+{body}
+"""
+            )
+        else:
+            title_only_count += 1
+
+            blocks.append(
+                f"""
+[뉴스 {idx} / 제목 기반 보조 자료]
+권역: {item['region']}
+출처: {item['source']}
+발행일: {item['published']}
+제목: {item['title']}
+본문 추출 실패 사유: {item['article_error'] or '본문 없음'}
+"""
+            )
+
+    return "\n".join(blocks), article_based_count, title_only_count
+
+
 def analyze_theme_news(
     theme_name: str,
     news_data: Any,
@@ -118,15 +178,17 @@ def analyze_theme_news(
     - positive_points
     - negative_points
     - key_regions
+    - article_based_count
+    - title_only_count
+    - analysis_basis
     """
 
     if load_dotenv is not None:
-        load_dotenv()
+        load_dotenv(".env", override=True)
 
     api_key = os.getenv("OPENAI_API_KEY")
     base_url = os.getenv("OPENAI_BASE_URL")
     model_name = model or os.getenv("OPENAI_MODEL", "claude-sonnet-4-6")
-
 
     if not api_key:
         result = DEFAULT_ANALYSIS_RESULT.copy()
@@ -145,37 +207,52 @@ def analyze_theme_news(
         result["summary"] = "분석할 뉴스가 없습니다."
         result["error"] = "뉴스 데이터가 비어 있습니다."
         return result
-    
+
+    news_text, article_based_count, title_only_count = _build_news_text(news_items)
+
     if base_url:
         client = OpenAI(api_key=api_key, base_url=base_url)
     else:
         client = OpenAI(api_key=api_key)
 
-    news_text = "\n".join(
-        [
-            f"- [{item['region']}] {item['title']} / 출처: {item['source']} / 발행일: {item['published']}"
-            for item in news_items
-        ]
-    )
-
     system_prompt = """
 너는 투자대회용 AI 투자 분석 보조자다.
-뉴스 제목만 보고 특정 테마의 분위기를 분석한다.
+너의 역할은 특정 테마와 관련된 뉴스의 분위기를 보수적으로 분석하는 것이다.
 
-주의사항:
+중요 원칙:
 - 실제 투자 추천을 하지 않는다.
-- 과장하지 않는다.
-- 뉴스 제목 기반의 제한적인 분석임을 전제로 판단한다.
+- 기사 본문이 있는 경우 본문 내용을 주요 근거로 사용한다.
+- 기사 본문이 없는 경우 제목만 보조 근거로 사용한다.
+- 제목만 있는 뉴스는 점수에 강하게 반영하지 않는다.
+- 단순 기대감, 전망, 의견성 기사는 높은 점수를 주지 않는다.
+- 실제 수주, 실적 개선, 정부 정책, 대규모 투자, 공급 계약, 생산 확대, 수요 증가가 본문에서 확인될 때만 높은 점수를 줄 수 있다.
+- 부정 뉴스, 규제, 공급 과잉, 실적 악화, 경영진 이탈, 기술 실패, 보안 이슈는 감점한다.
 - 결과는 반드시 JSON 형식으로만 출력한다.
 """
 
     user_prompt = f"""
 분석 대상 테마: {theme_name}
 
-아래 뉴스 제목들을 바탕으로 테마 뉴스 분위기를 분석해줘.
+아래 뉴스들을 바탕으로 테마 뉴스 분위기를 분석해줘.
 
-뉴스 목록:
+뉴스 자료:
 {news_text}
+
+본문 기반 기사 수: {article_based_count}
+제목 기반 보조 기사 수: {title_only_count}
+
+점수 산정 기준:
+- 80~100: 본문에서 강한 수요 증가, 대규모 투자, 수주, 실적 개선, 정책 지원이 명확히 확인됨
+- 60~79: 긍정 흐름이 우세하지만 일부는 기대감 또는 제목 기반 자료에 의존함
+- 40~59: 긍정과 부정이 혼재하거나 근거가 제한적임
+- 20~39: 부정 이슈가 우세하거나 성장 기대가 약함
+- 0~19: 강한 부정 뉴스가 다수 확인됨
+
+주의:
+- 본문 기반 기사 수가 적으면 점수를 보수적으로 산정해라.
+- 제목 기반 기사만으로는 75점 이상을 주지 마라.
+- 기사 내용이 테마와 직접 관련이 약하면 점수를 낮춰라.
+- 요약에는 뉴스 본문을 읽은 근거와 한계를 함께 써라.
 
 아래 JSON 형식으로만 답해줘.
 
@@ -185,15 +262,11 @@ def analyze_theme_news(
   "summary": "뉴스 분위기 요약 2~3문장",
   "positive_points": ["긍정 요인 1", "긍정 요인 2"],
   "negative_points": ["부정 요인 1", "부정 요인 2"],
-  "key_regions": ["국내", "미국", "일본", "중동"]
+  "key_regions": ["국내", "미국", "일본", "중동"],
+  "article_based_count": {article_based_count},
+  "title_only_count": {title_only_count},
+  "analysis_basis": "본문 기반 중심" 또는 "본문+제목 혼합" 또는 "제목 기반 제한적 분석"
 }}
-
-점수 기준:
-- 80~100: 강한 긍정
-- 60~79: 긍정 우위
-- 40~59: 중립
-- 20~39: 부정 우위
-- 0~19: 강한 부정
 """
 
     try:
@@ -219,6 +292,9 @@ def analyze_theme_news(
         result["positive_points"] = parsed.get("positive_points", [])
         result["negative_points"] = parsed.get("negative_points", [])
         result["key_regions"] = parsed.get("key_regions", [])
+        result["article_based_count"] = int(parsed.get("article_based_count", article_based_count))
+        result["title_only_count"] = int(parsed.get("title_only_count", title_only_count))
+        result["analysis_basis"] = parsed.get("analysis_basis", "본문+제목 혼합")
         result["ai_enabled"] = True
         result["error"] = None
 
@@ -226,5 +302,8 @@ def analyze_theme_news(
 
     except Exception as e:
         result = DEFAULT_ANALYSIS_RESULT.copy()
+        result["article_based_count"] = article_based_count
+        result["title_only_count"] = title_only_count
+        result["analysis_basis"] = "분석 실패"
         result["error"] = str(e)
         return result
