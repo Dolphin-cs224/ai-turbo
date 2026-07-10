@@ -7,3 +7,4 @@ openai
 setuptools<81
 googlenewsdecoder
 trafilatura
+beautifulsoup4
