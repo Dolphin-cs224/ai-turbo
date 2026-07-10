@@ -19,9 +19,6 @@ DEFAULT_ANALYSIS_RESULT = {
     "theme_news_score": 50,
     "news_sentiment": "중립",
     "summary": "AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.",
-    "positive_points": [],
-    "negative_points": [],
-    "key_regions": [],
     "article_based_count": 0,
     "title_only_count": 0,
     "analysis_basis": "분석 불가",
@@ -227,6 +224,9 @@ def analyze_theme_news(
 - 단순 기대감, 전망, 의견성 기사는 높은 점수를 주지 않는다.
 - 실제 수주, 실적 개선, 정부 정책, 대규모 투자, 공급 계약, 생산 확대, 수요 증가가 본문에서 확인될 때만 높은 점수를 줄 수 있다.
 - 부정 뉴스, 규제, 공급 과잉, 실적 악화, 경영진 이탈, 기술 실패, 보안 이슈는 감점한다.
+- summary는 반드시 긍정 요인과 부정 요인을 모두 포함한 중립적 시각으로 작성한다.
+- summary는 과도하게 낙관적이거나 비관적으로 쓰지 않는다.
+- summary에는 본문 기반으로 확인된 내용과 아직 확인하기 어려운 한계를 함께 적는다.
 - 결과는 반드시 JSON 형식으로만 출력한다.
 """
 
@@ -253,16 +253,15 @@ def analyze_theme_news(
 - 제목 기반 기사만으로는 75점 이상을 주지 마라.
 - 기사 내용이 테마와 직접 관련이 약하면 점수를 낮춰라.
 - 요약에는 뉴스 본문을 읽은 근거와 한계를 함께 써라.
+- summary에는 긍정적 해석과 부정적 또는 제한적 해석을 모두 포함해라.
+- summary는 '긍정적으로 볼 점은 ~이나, 제한점은 ~이다'와 같은 균형 잡힌 문장으로 작성해라.
 
 아래 JSON 형식으로만 답해줘.
 
 {{
   "theme_news_score": 0부터 100 사이의 정수,
   "news_sentiment": "긍정" 또는 "중립" 또는 "부정",
-  "summary": "뉴스 분위기 요약 2~3문장",
-  "positive_points": ["긍정 요인 1", "긍정 요인 2"],
-  "negative_points": ["부정 요인 1", "부정 요인 2"],
-  "key_regions": ["국내", "미국", "일본", "중동"],
+  "summary": ""긍정 요인과 부정 요인을 모두 포함한 중립적 뉴스 분위기 요약 4~5문장",
   "article_based_count": {article_based_count},
   "title_only_count": {title_only_count},
   "analysis_basis": "본문 기반 중심" 또는 "본문+제목 혼합" 또는 "제목 기반 제한적 분석"
@@ -289,9 +288,6 @@ def analyze_theme_news(
 
         result["news_sentiment"] = parsed.get("news_sentiment", "중립")
         result["summary"] = parsed.get("summary", "")
-        result["positive_points"] = parsed.get("positive_points", [])
-        result["negative_points"] = parsed.get("negative_points", [])
-        result["key_regions"] = parsed.get("key_regions", [])
         result["article_based_count"] = int(parsed.get("article_based_count", article_based_count))
         result["title_only_count"] = int(parsed.get("title_only_count", title_only_count))
         result["analysis_basis"] = parsed.get("analysis_basis", "본문+제목 혼합")

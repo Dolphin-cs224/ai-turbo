@@ -389,14 +389,27 @@ def classify_risk_type(row):
 
 df["risk_type"] = df.apply(classify_risk_type, axis=1)
 
-
 # -----------------------------
-# AI 뉴스 점수 반영
+# 저장된 AI 뉴스 점수 반영
 # -----------------------------
-if "theme_news_scores" not in st.session_state:
-    st.session_state["theme_news_scores"] = {}
+theme_news_scores = {}
 
-theme_news_scores = st.session_state.get("theme_news_scores", {})
+try:
+    theme_news_score_df = pd.read_csv("data/theme_news_scores.csv")
+
+    if "theme" in theme_news_score_df.columns and "theme_news_score" in theme_news_score_df.columns:
+        theme_news_scores = (
+            theme_news_score_df
+            .dropna(subset=["theme"])
+            .set_index("theme")["theme_news_score"]
+            .to_dict()
+        )
+
+except FileNotFoundError:
+    st.info("저장된 AI 뉴스 점수 파일이 없습니다. 기본 뉴스 점수 50점을 사용합니다.")
+
+except Exception as e:
+    st.warning(f"AI 뉴스 점수 파일을 불러오지 못했습니다. 기본 뉴스 점수 50점을 사용합니다. 오류: {e}")
 
 df["theme_news_score"] = (
     df["theme"]
@@ -523,143 +536,127 @@ else:
 
 
 # -----------------------------
-# 테마 뉴스 수집 테스트
+# 테마 뉴스 현황
 # -----------------------------
-st.subheader("테마 뉴스 수집 테스트")
+st.subheader("테마 뉴스 현황")
+
+saved_score_path = "data/theme_news_scores.csv"
+saved_news_path = "data/theme_news_items.csv"
+
+try:
+    saved_score_df = pd.read_csv(saved_score_path)
+except FileNotFoundError:
+    saved_score_df = pd.DataFrame()
+except Exception as e:
+    st.warning(f"저장된 테마 뉴스 점수를 불러오지 못했습니다. 오류: {e}")
+    saved_score_df = pd.DataFrame()
+
+try:
+    saved_news_df = pd.read_csv(saved_news_path)
+except FileNotFoundError:
+    saved_news_df = pd.DataFrame()
+except Exception as e:
+    st.warning(f"저장된 뉴스 목록을 불러오지 못했습니다. 오류: {e}")
+    saved_news_df = pd.DataFrame()
+
+available_themes = sorted(df["theme"].dropna().unique())
 
 selected_news_theme = st.selectbox(
-    "뉴스를 수집할 테마를 선택하세요",
-    sorted(df["theme"].unique())
+    "테마 선택",
+    available_themes,
+    key="saved_news_theme_select"
 )
 
-selected_news_regions = st.multiselect(
-    "뉴스 권역을 선택하세요",
-    ["국내", "미국", "일본", "중동"],
-    default=["국내", "미국", "일본", "중동"]
-)
+if saved_score_df.empty:
+    st.info("저장된 AI 뉴스 분석 결과가 없습니다. 먼저 전체 테마 뉴스 업데이트 스크립트를 실행하세요.")
+else:
+    selected_score_df = saved_score_df[
+        saved_score_df["theme"].eq(selected_news_theme)
+    ]
 
-max_news_per_keyword = st.slider(
-    "키워드당 뉴스 수",
-    min_value=1,
-    max_value=5,
-    value=2
-)
-
-if "theme_news_items" not in st.session_state:
-    st.session_state["theme_news_items"] = []
-
-if "theme_news_df" not in st.session_state:
-    st.session_state["theme_news_df"] = None
-
-if "theme_news_analysis" not in st.session_state:
-    st.session_state["theme_news_analysis"] = None
-
-if st.button("테마 뉴스 수집"):
-    news_items = collect_theme_news(
-        selected_news_theme,
-        max_items_per_keyword=max_news_per_keyword,
-        regions=selected_news_regions
-    )
-
-    st.session_state["theme_news_items"] = news_items
-    st.session_state["theme_news_analysis"] = None
-
-    if news_items:
-        st.session_state["theme_news_df"] = pd.DataFrame(news_items)
+    if selected_score_df.empty:
+        st.info("선택한 테마의 AI 뉴스 분석 결과가 없습니다.")
     else:
-        st.session_state["theme_news_df"] = None
+        selected_score = selected_score_df.iloc[0]
 
-news_df = st.session_state.get("theme_news_df")
-
-if news_df is not None and not news_df.empty:
-    st.write("권역별 뉴스 수")
-    st.dataframe(
-        news_df.groupby("region").size().reset_index(name="news_count"),
-        width="stretch"
-    )
-
-    st.dataframe(news_df, width="stretch")
-
-    if st.button("AI 뉴스 분석 실행"):
-        with st.spinner("기사 본문을 읽고 AI가 뉴스 분위기를 분석하는 중입니다..."):
-            enriched_news = enrich_news_with_article_text(
-                news_df,
-                max_articles=10,
-                max_chars_per_article=2500
-            )
-
-            enriched_news_df = pd.DataFrame(enriched_news)
-
-            analysis_result = analyze_theme_news(
-                selected_news_theme,
-                enriched_news_df
-            )
-
-            st.session_state["theme_news_df"] = enriched_news_df
-            st.session_state["theme_news_analysis"] = analysis_result
-            
-            if "theme_news_scores" not in st.session_state:
-                st.session_state["theme_news_scores"] = {}
-
-            st.session_state["theme_news_scores"][selected_news_theme] = analysis_result.get(
-                "theme_news_score",
-                50
-            )
-
-            st.rerun()
-
-    analysis_result = st.session_state.get("theme_news_analysis")
-
-    if analysis_result:
         st.write("AI 뉴스 분석 결과")
 
-        if analysis_result.get("ai_enabled"):
-            st.success("AI 뉴스 분석 완료")
-        else:
-            st.warning("AI 뉴스 분석이 기본값으로 처리되었습니다.")
-
-        st.metric(
-            "테마 뉴스 점수",
-            analysis_result.get("theme_news_score", 50)
-        )
-
-        col1, col2, col3 = st.columns(3)
+        col1, col2, col3, col4 = st.columns(4)
 
         col1.metric(
-            "본문 기반 기사",
-            analysis_result.get("article_based_count", 0)
+            "테마 뉴스 점수",
+            selected_score.get("theme_news_score", 50)
         )
 
         col2.metric(
-            "제목 기반 기사",
-            analysis_result.get("title_only_count", 0)
+            "본문 기반 기사",
+            selected_score.get("article_based_count", 0)
         )
 
         col3.metric(
+            "제목 기반 기사",
+            selected_score.get("title_only_count", 0)
+        )
+
+        col4.metric(
             "분석 기준",
-            analysis_result.get("analysis_basis", "분석 기준 없음")
+            selected_score.get("analysis_basis", "분석 기준 없음")
         )
 
         st.write("뉴스 분위기")
-        st.write(analysis_result.get("news_sentiment", "중립"))
+        st.write(selected_score.get("news_sentiment", "중립"))
 
         st.write("요약")
-        st.write(analysis_result.get("summary", ""))
+        st.write(selected_score.get("summary", ""))
 
-        st.write("긍정 요인")
-        st.write(analysis_result.get("positive_points", []))
+        if "updated_at" in selected_score.index:
+            st.caption(f"마지막 업데이트: {selected_score.get('updated_at', '')}")
 
-        st.write("부정 요인")
-        st.write(analysis_result.get("negative_points", []))
+        if selected_score.get("error"):
+            st.error(selected_score.get("error"))
 
-        st.write("주요 권역")
-        st.write(analysis_result.get("key_regions", []))
+st.write("수집 뉴스 목록")
 
-        if analysis_result.get("error"):
-            st.error(analysis_result.get("error"))
-
+if saved_news_df.empty:
+    st.info("저장된 뉴스 목록이 없습니다.")
 else:
-    st.info("수집된 뉴스가 없습니다. 먼저 테마 뉴스를 수집하세요.")
+    selected_news_df = saved_news_df[
+        saved_news_df["theme"].eq(selected_news_theme)
+    ]
+
+    if selected_news_df.empty:
+        st.info("선택한 테마의 저장된 뉴스가 없습니다.")
+    else:
+        news_display_cols = [
+            "title",
+            "source",
+            "region",
+            "pub_date",
+            "article_readable",
+            "article_url",
+            "link",
+        ]
+
+        existing_news_cols = [
+            col for col in news_display_cols
+            if col in selected_news_df.columns
+        ]
+
+        display_news_df = selected_news_df[existing_news_cols].copy()
+
+        rename_map = {
+            "title": "제목",
+            "source": "출처",
+            "region": "권역",
+            "pub_date": "발행일",
+            "article_readable": "본문 읽기",
+            "article_url": "원문 URL",
+            "link": "링크",
+        }
+
+        display_news_df = display_news_df.rename(columns=rename_map)
+
+        st.dataframe(display_news_df, width="stretch")
 
 
 # -----------------------------
