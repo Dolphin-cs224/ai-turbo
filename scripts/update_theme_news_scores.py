@@ -18,7 +18,7 @@ NEWS_OUTPUT_PATH = "data/theme_news_items.csv"
 REGIONS = ["국내", "미국", "일본", "중동"]
 
 MAX_NEWS_PER_KEYWORD = 5
-MAX_ARTICLES_PER_THEME = 10
+MAX_ARTICLES_PER_REGION = 4
 MAX_CHARS_PER_ARTICLE = 2500
 
 SLEEP_SECONDS = 2
@@ -28,6 +28,45 @@ def load_themes() -> list[str]:
     df = pd.read_csv(WATCHLIST_PATH, dtype={"code": str})
     themes = sorted(df["theme"].dropna().unique())
     return themes
+
+
+def prepare_news_items_for_reading(news_items: list[dict]) -> pd.DataFrame:
+    news_df = pd.DataFrame(news_items)
+
+    if news_df.empty:
+        return news_df
+
+    # 같은 링크 또는 같은 제목의 중복 뉴스 제거
+    if "link" in news_df.columns:
+        news_df = news_df.drop_duplicates(subset=["link"], keep="first")
+
+    if "title" in news_df.columns:
+        news_df = news_df.drop_duplicates(subset=["title"], keep="first")
+
+    # 발행일 기준 최신순 정렬
+    if "pub_date" in news_df.columns:
+        news_df["_published_at"] = pd.to_datetime(
+            news_df["pub_date"],
+            errors="coerce",
+            utc=True,
+        )
+
+        if "region" in news_df.columns:
+            news_df = news_df.sort_values(
+                by=["region", "_published_at"],
+                ascending=[True, False],
+                na_position="last",
+            )
+        else:
+            news_df = news_df.sort_values(
+                by=["_published_at"],
+                ascending=False,
+                na_position="last",
+            )
+
+        news_df = news_df.drop(columns=["_published_at"])
+
+    return news_df.reset_index(drop=True)
 
 
 def update_one_theme(theme: str) -> dict:
@@ -40,11 +79,30 @@ def update_one_theme(theme: str) -> dict:
         regions=REGIONS,
     )
 
-    enriched_news = enrich_news_with_article_text(
-        news_items,
-        max_articles=MAX_ARTICLES_PER_THEME,
-        max_chars_per_article=MAX_CHARS_PER_ARTICLE,
-    )
+    enriched_news = []
+
+    news_df = prepare_news_items_for_reading(news_items)
+
+    if not news_df.empty and "region" in news_df.columns:
+        for region in REGIONS:
+            region_news = news_df[news_df["region"].eq(region)].to_dict("records")
+
+            if not region_news:
+                continue
+
+            region_enriched_news = enrich_news_with_article_text(
+                region_news,
+                max_articles=MAX_ARTICLES_PER_REGION,
+                max_chars_per_article=MAX_CHARS_PER_ARTICLE,
+            )
+
+            enriched_news.extend(region_enriched_news)
+    else:
+        enriched_news = enrich_news_with_article_text(
+            news_items,
+            max_articles=MAX_ARTICLES_PER_REGION,
+            max_chars_per_article=MAX_CHARS_PER_ARTICLE,
+        )
 
     analysis = analyze_theme_news(
         theme,
