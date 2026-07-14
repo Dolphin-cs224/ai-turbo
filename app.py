@@ -612,8 +612,10 @@ else:
         if "updated_at" in selected_score.index:
             st.caption(f"마지막 업데이트: {selected_score.get('updated_at', '')}")
 
-        if selected_score.get("error"):
-            st.error(selected_score.get("error"))
+        error_value = selected_score.get("error")
+
+        if pd.notna(error_value) and str(error_value).strip():
+            st.error(str(error_value))
 
 st.write("수집 뉴스 목록")
 

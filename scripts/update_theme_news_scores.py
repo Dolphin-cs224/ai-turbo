@@ -150,7 +150,7 @@ def main() -> None:
         print(f"[{idx}/{len(themes)}] {theme}")
 
         try:
-            result = update_one_theme(theme)
+            result, enriched_news = update_one_theme(theme)
             results.append(result)
 
             for item in enriched_news:
@@ -186,6 +186,10 @@ def main() -> None:
     result_df.to_csv(SCORE_OUTPUT_PATH, index=False, encoding="utf-8-sig")
 
     news_df = pd.DataFrame(all_news_items)
+
+    # 기사 본문은 AI 분석에만 사용하고 공개 CSV에는 저장하지 않음
+    news_df = news_df.drop(columns=["article_text"], errors="ignore")
+
     news_df.to_csv(NEWS_OUTPUT_PATH, index=False, encoding="utf-8-sig")
 
     print("=" * 80)
