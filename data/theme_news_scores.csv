@@ -1,32 +1,32 @@
 ﻿updated_at,theme,theme_news_score,news_sentiment,summary,positive_points,negative_points,key_regions,article_based_count,title_only_count,analysis_basis,ai_enabled,error,news_count
-2026-08-24 07:37:56,2차전지,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,7,23,분석 실패,False,"Error code: 404 - {'detail': {'code': 404, 'message': ""invalid_request_error - Model 'gpt-5.4-mini' not found""}}",63
-2026-08-24 07:39:06,AI반도체,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,7,23,분석 실패,False,"Error code: 404 - {'detail': {'code': 404, 'message': ""invalid_request_error - Model 'gpt-5.4-mini' not found""}}",88
-2026-08-24 07:40:21,IT서비스,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,6,24,분석 실패,False,"Error code: 404 - {'detail': {'code': 404, 'message': ""invalid_request_error - Model 'gpt-5.4-mini' not found""}}",60
-2026-08-24 07:41:31,건설/건자재,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,5,25,분석 실패,False,"Error code: 404 - {'detail': {'code': 404, 'message': ""invalid_request_error - Model 'gpt-5.4-mini' not found""}}",51
-2026-08-24 07:42:27,게임,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,6,24,분석 실패,False,"Error code: 404 - {'detail': {'code': 404, 'message': ""invalid_request_error - Model 'gpt-5.4-mini' not found""}}",39
-2026-08-24 07:43:15,광고/미디어,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,6,24,분석 실패,False,"Error code: 404 - {'detail': {'code': 404, 'message': ""invalid_request_error - Model 'gpt-5.4-mini' not found""}}",44
-2026-08-24 07:43:55,금융,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,7,23,분석 실패,False,"Error code: 404 - {'detail': {'code': 404, 'message': ""invalid_request_error - Model 'gpt-5.4-mini' not found""}}",40
-2026-08-24 07:44:37,기계/산업재,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,5,25,분석 실패,False,"Error code: 404 - {'detail': {'code': 404, 'message': ""invalid_request_error - Model 'gpt-5.4-mini' not found""}}",37
-2026-08-24 07:45:18,레저/카지노,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,6,24,분석 실패,False,"Error code: 404 - {'detail': {'code': 404, 'message': ""invalid_request_error - Model 'gpt-5.4-mini' not found""}}",32
-2026-08-24 07:46:32,로봇/AI,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,7,23,분석 실패,False,"Error code: 404 - {'detail': {'code': 404, 'message': ""invalid_request_error - Model 'gpt-5.4-mini' not found""}}",54
-2026-08-24 07:47:30,바이오,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,7,23,분석 실패,False,"Error code: 404 - {'detail': {'code': 404, 'message': ""invalid_request_error - Model 'gpt-5.4-mini' not found""}}",56
-2026-08-24 07:48:40,방산,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,6,24,분석 실패,False,"Error code: 404 - {'detail': {'code': 404, 'message': ""invalid_request_error - Model 'gpt-5.4-mini' not found""}}",63
-2026-08-24 07:49:24,보안,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,8,22,분석 실패,False,"Error code: 404 - {'detail': {'code': 404, 'message': ""invalid_request_error - Model 'gpt-5.4-mini' not found""}}",30
-2026-08-24 07:50:12,소비재,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,4,26,분석 실패,False,"Error code: 404 - {'detail': {'code': 404, 'message': ""invalid_request_error - Model 'gpt-5.4-mini' not found""}}",40
-2026-08-24 07:50:54,식품,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,7,23,분석 실패,False,"Error code: 404 - {'detail': {'code': 404, 'message': ""invalid_request_error - Model 'gpt-5.4-mini' not found""}}",31
-2026-08-24 07:51:42,엔터/미디어,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,6,24,분석 실패,False,"Error code: 404 - {'detail': {'code': 404, 'message': ""invalid_request_error - Model 'gpt-5.4-mini' not found""}}",32
-2026-08-24 07:52:22,운송/항공,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,6,24,분석 실패,False,"Error code: 404 - {'detail': {'code': 404, 'message': ""invalid_request_error - Model 'gpt-5.4-mini' not found""}}",35
-2026-08-24 07:53:36,원전/에너지,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,8,22,분석 실패,False,"Error code: 404 - {'detail': {'code': 404, 'message': ""invalid_request_error - Model 'gpt-5.4-mini' not found""}}",59
-2026-08-24 07:54:17,유통,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,4,26,분석 실패,False,"Error code: 404 - {'detail': {'code': 404, 'message': ""invalid_request_error - Model 'gpt-5.4-mini' not found""}}",37
-2026-08-24 07:55:21,인프라/배당,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,6,24,분석 실패,False,"Error code: 404 - {'detail': {'code': 404, 'message': ""invalid_request_error - Model 'gpt-5.4-mini' not found""}}",48
-2026-08-24 07:56:19,자동차,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,7,23,분석 실패,False,"Error code: 404 - {'detail': {'code': 404, 'message': ""invalid_request_error - Model 'gpt-5.4-mini' not found""}}",50
-2026-08-24 07:57:42,전력인프라,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,7,23,분석 실패,False,"Error code: 404 - {'detail': {'code': 404, 'message': ""invalid_request_error - Model 'gpt-5.4-mini' not found""}}",71
-2026-08-24 07:58:48,전자부품/PCB,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,5,25,분석 실패,False,"Error code: 404 - {'detail': {'code': 404, 'message': ""invalid_request_error - Model 'gpt-5.4-mini' not found""}}",47
-2026-08-24 08:00:02,정유/화학,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,6,24,분석 실패,False,"Error code: 404 - {'detail': {'code': 404, 'message': ""invalid_request_error - Model 'gpt-5.4-mini' not found""}}",53
-2026-08-24 08:01:19,조선,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,8,22,분석 실패,False,"Error code: 404 - {'detail': {'code': 404, 'message': ""invalid_request_error - Model 'gpt-5.4-mini' not found""}}",65
-2026-08-24 08:02:00,지주/복합,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,7,23,분석 실패,False,"Error code: 404 - {'detail': {'code': 404, 'message': ""invalid_request_error - Model 'gpt-5.4-mini' not found""}}",31
-2026-08-24 08:02:49,철강/소재,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,5,25,분석 실패,False,"Error code: 404 - {'detail': {'code': 404, 'message': ""invalid_request_error - Model 'gpt-5.4-mini' not found""}}",42
-2026-08-24 08:03:55,통신,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,6,24,분석 실패,False,"Error code: 404 - {'detail': {'code': 404, 'message': ""invalid_request_error - Model 'gpt-5.4-mini' not found""}}",45
-2026-08-24 08:04:44,패션/의류,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,3,27,분석 실패,False,"Error code: 404 - {'detail': {'code': 404, 'message': ""invalid_request_error - Model 'gpt-5.4-mini' not found""}}",40
-2026-08-24 08:05:36,플랫폼/인터넷,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,5,25,분석 실패,False,"Error code: 404 - {'detail': {'code': 404, 'message': ""invalid_request_error - Model 'gpt-5.4-mini' not found""}}",49
-2026-08-24 08:06:33,화장품/소비재,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,7,23,분석 실패,False,"Error code: 404 - {'detail': {'code': 404, 'message': ""invalid_request_error - Model 'gpt-5.4-mini' not found""}}",39
+2026-08-25 07:44:10,2차전지,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,6,24,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - Invalid API key'}}",64
+2026-08-25 07:44:59,AI반도체,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,6,24,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - Invalid API key'}}",86
+2026-08-25 07:45:54,IT서비스,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,7,23,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - Invalid API key'}}",60
+2026-08-25 07:46:49,건설/건자재,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,7,23,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - Invalid API key'}}",51
+2026-08-25 07:47:37,게임,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,6,24,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - Invalid API key'}}",40
+2026-08-25 07:48:14,광고/미디어,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,6,24,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - Invalid API key'}}",44
+2026-08-25 07:48:47,금융,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,7,23,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - Invalid API key'}}",41
+2026-08-25 07:49:21,기계/산업재,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,6,24,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - Invalid API key'}}",37
+2026-08-25 07:49:53,레저/카지노,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,6,24,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - Invalid API key'}}",31
+2026-08-25 07:50:48,로봇/AI,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,5,25,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - Invalid API key'}}",55
+2026-08-25 07:51:39,바이오,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,6,24,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - Invalid API key'}}",58
+2026-08-25 07:52:58,방산,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,6,24,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - Invalid API key'}}",63
+2026-08-25 07:53:31,보안,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,7,23,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - Invalid API key'}}",31
+2026-08-25 07:54:11,소비재,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,4,26,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - Invalid API key'}}",40
+2026-08-25 07:54:42,식품,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,6,24,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - Invalid API key'}}",31
+2026-08-25 07:55:17,엔터/미디어,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,6,24,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - Invalid API key'}}",33
+2026-08-25 07:55:51,운송/항공,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,6,24,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - Invalid API key'}}",34
+2026-08-25 07:56:54,원전/에너지,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,7,23,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - Invalid API key'}}",59
+2026-08-25 07:57:27,유통,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,4,26,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - Invalid API key'}}",36
+2026-08-25 07:58:20,인프라/배당,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,5,25,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - Invalid API key'}}",49
+2026-08-25 07:59:06,자동차,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,8,22,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - Invalid API key'}}",52
+2026-08-25 08:00:04,전력인프라,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,8,22,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - Invalid API key'}}",72
+2026-08-25 08:00:56,전자부품/PCB,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,6,24,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - Invalid API key'}}",46
+2026-08-25 08:01:49,정유/화학,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,6,24,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - Invalid API key'}}",54
+2026-08-25 08:02:52,조선,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,7,23,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - Invalid API key'}}",65
+2026-08-25 08:03:26,지주/복합,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,6,24,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - Invalid API key'}}",31
+2026-08-25 08:04:07,철강/소재,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,5,25,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - Invalid API key'}}",44
+2026-08-25 08:05:03,통신,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,3,27,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - Invalid API key'}}",45
+2026-08-25 08:05:41,패션/의류,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,2,28,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - Invalid API key'}}",39
+2026-08-25 08:06:23,플랫폼/인터넷,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,3,27,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - Invalid API key'}}",50
+2026-08-25 08:07:07,화장품/소비재,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,6,24,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - Invalid API key'}}",40
