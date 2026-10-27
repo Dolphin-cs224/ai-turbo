@@ -1,32 +1,32 @@
 ﻿updated_at,theme,theme_news_score,news_sentiment,summary,positive_points,negative_points,key_regions,article_based_count,title_only_count,analysis_basis,ai_enabled,error,news_count
-2026-10-26 09:22:26,2차전지,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - This API key has been revoked. Create a new key in the console.'}}",62
-2026-10-26 09:23:03,AI반도체,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - This API key has been revoked. Create a new key in the console.'}}",89
-2026-10-26 09:23:39,IT서비스,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - This API key has been revoked. Create a new key in the console.'}}",65
-2026-10-26 09:24:14,건설/건자재,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - This API key has been revoked. Create a new key in the console.'}}",51
-2026-10-26 09:24:44,게임,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - This API key has been revoked. Create a new key in the console.'}}",45
-2026-10-26 09:25:10,광고/미디어,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - This API key has been revoked. Create a new key in the console.'}}",40
-2026-10-26 09:25:32,금융,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - This API key has been revoked. Create a new key in the console.'}}",41
-2026-10-26 09:25:57,기계/산업재,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - This API key has been revoked. Create a new key in the console.'}}",40
-2026-10-26 09:26:20,레저/카지노,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - This API key has been revoked. Create a new key in the console.'}}",38
-2026-10-26 09:26:55,로봇/AI,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - This API key has been revoked. Create a new key in the console.'}}",55
-2026-10-26 09:27:24,바이오,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - This API key has been revoked. Create a new key in the console.'}}",55
-2026-10-26 09:28:00,방산,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - This API key has been revoked. Create a new key in the console.'}}",60
-2026-10-26 09:28:24,보안,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - This API key has been revoked. Create a new key in the console.'}}",33
-2026-10-26 09:28:47,소비재,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - This API key has been revoked. Create a new key in the console.'}}",41
-2026-10-26 09:29:09,식품,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - This API key has been revoked. Create a new key in the console.'}}",31
-2026-10-26 09:29:32,엔터/미디어,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - This API key has been revoked. Create a new key in the console.'}}",34
-2026-10-26 09:29:55,운송/항공,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - This API key has been revoked. Create a new key in the console.'}}",38
-2026-10-26 09:30:31,원전/에너지,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - This API key has been revoked. Create a new key in the console.'}}",59
-2026-10-26 09:30:57,유통,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - This API key has been revoked. Create a new key in the console.'}}",38
-2026-10-26 09:31:26,인프라/배당,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - This API key has been revoked. Create a new key in the console.'}}",50
-2026-10-26 09:31:55,자동차,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - This API key has been revoked. Create a new key in the console.'}}",48
-2026-10-26 09:32:31,전력인프라,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - This API key has been revoked. Create a new key in the console.'}}",71
-2026-10-26 09:33:02,전자부품/PCB,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - This API key has been revoked. Create a new key in the console.'}}",47
-2026-10-26 09:33:37,정유/화학,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - This API key has been revoked. Create a new key in the console.'}}",61
-2026-10-26 09:34:12,조선,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - This API key has been revoked. Create a new key in the console.'}}",66
-2026-10-26 09:34:34,지주/복합,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - This API key has been revoked. Create a new key in the console.'}}",30
-2026-10-26 09:34:57,철강/소재,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - This API key has been revoked. Create a new key in the console.'}}",46
-2026-10-26 09:35:31,통신,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - This API key has been revoked. Create a new key in the console.'}}",46
-2026-10-26 09:35:53,패션/의류,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - This API key has been revoked. Create a new key in the console.'}}",39
-2026-10-26 09:36:23,플랫폼/인터넷,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - This API key has been revoked. Create a new key in the console.'}}",52
-2026-10-26 09:36:47,화장품/소비재,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,"Error code: 401 - {'detail': {'code': 401, 'message': 'authentication_error - This API key has been revoked. Create a new key in the console.'}}",42
+2026-10-27 10:29:00,2차전지,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,Error code: 401,64
+2026-10-27 10:29:36,AI반도체,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,Error code: 401,88
+2026-10-27 10:30:11,IT서비스,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,Error code: 401,64
+2026-10-27 10:30:46,건설/건자재,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,Error code: 401,51
+2026-10-27 10:31:16,게임,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,Error code: 401,45
+2026-10-27 10:31:42,광고/미디어,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,Error code: 401,43
+2026-10-27 10:32:04,금융,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,Error code: 401,41
+2026-10-27 10:32:28,기계/산업재,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,Error code: 401,40
+2026-10-27 10:32:51,레저/카지노,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,Error code: 401,38
+2026-10-27 10:33:26,로봇/AI,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,Error code: 401,54
+2026-10-27 10:33:55,바이오,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,Error code: 401,57
+2026-10-27 10:34:31,방산,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,Error code: 401,59
+2026-10-27 10:34:55,보안,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,Error code: 401,32
+2026-10-27 10:35:17,소비재,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,Error code: 401,42
+2026-10-27 10:35:40,식품,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,Error code: 401,31
+2026-10-27 10:36:03,엔터/미디어,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,Error code: 401,30
+2026-10-27 10:36:26,운송/항공,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,Error code: 401,38
+2026-10-27 10:37:01,원전/에너지,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,Error code: 401,60
+2026-10-27 10:37:27,유통,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,Error code: 401,38
+2026-10-27 10:37:55,인프라/배당,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,Error code: 401,49
+2026-10-27 10:38:25,자동차,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,Error code: 401,49
+2026-10-27 10:39:00,전력인프라,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,Error code: 401,72
+2026-10-27 10:39:30,전자부품/PCB,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,Error code: 401,48
+2026-10-27 10:40:06,정유/화학,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,Error code: 401,59
+2026-10-27 10:40:41,조선,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,Error code: 401,66
+2026-10-27 10:41:03,지주/복합,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,Error code: 401,30
+2026-10-27 10:41:27,철강/소재,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,Error code: 401,45
+2026-10-27 10:42:01,통신,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,Error code: 401,47
+2026-10-27 10:42:23,패션/의류,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,Error code: 401,39
+2026-10-27 10:42:52,플랫폼/인터넷,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,Error code: 401,50
+2026-10-27 10:43:16,화장품/소비재,50,중립,AI 뉴스 분석을 실행할 수 없어 기본값으로 표시합니다.,,,,0,30,분석 실패,False,Error code: 401,42
